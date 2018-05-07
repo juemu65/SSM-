@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.ForderMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Forder" >
+    <id column="kid" property="kid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="fid" property="fid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="pj" property="pj" jdbcType="VARCHAR" />
+    <result column="stime" property="stime" jdbcType="VARCHAR" />
+    <result column="etime" property="etime" jdbcType="VARCHAR" />
+    <result column="fwid" property="fwid" jdbcType="INTEGER" />
+    <result column="isdel" property="isdel" jdbcType="VARCHAR" />
+    <result column="pubtime" property="pubtime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    kid, uid, fid, status, pj, stime, etime, fwid, isdel, pubtime
+  </sql>
+   
+   <select id="getCount" parameterType="java.util.Map" resultType="int">
+    select  count(*) from forder  where 1=1 
+    <if test="uid!=null ">
+     and uid=#{uid,jdbcType=INTEGER}
+     </if>
+      <if test="fid!=null ">
+     and fid=#{fid,jdbcType=INTEGER}
+     </if>
+      <if test="status!=null ">
+     and status=#{status,jdbcType=VARCHAR}
+     </if>
+  </select>
+  <select id="getAll" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select   
+    <include refid="Base_Column_List" />
+  
+     from forder where 1=1
+       <if test="uid!=null ">
+     and uid=#{uid,jdbcType=INTEGER}
+     </if>
+      <if test="fid!=null ">
+     and fid=#{fid,jdbcType=INTEGER}
+     </if>
+      <if test="status!=null ">
+     and status=#{status,jdbcType=VARCHAR}
+     </if>
+   
+  </select> 
+   <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+     select 
+     <include refid="Base_Column_List" />
+ 
+    from forder  where 1=1
+    
+      <if test="uid!=null ">
+     and uid=#{uid,jdbcType=INTEGER}
+     </if>
+      <if test="fid!=null ">
+     and fid=#{fid,jdbcType=INTEGER}
+     </if>
+      <if test="status!=null ">
+     and status=#{status,jdbcType=VARCHAR}
+     </if>
+  
+     <if test="pageno!=null and pageSize!=null">
+     limit #{pageno},#{pageSize}
+     </if>
+     </select>
+     <select id="showTop10" parameterType="java.util.Map" resultMap="BaseResultMap">
+     select 
+     <include refid="Base_Column_List" />
+
+    from forder  
+  
+     <if test="pageno!=null and pageSize!=null">
+     limit #{pageno},#{pageSize}
+     </if>
+     </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from forder
+    where kid = #{kid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from forder
+    where kid = #{kid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Forder" >
+    insert into forder (kid, uid, fid, 
+      status, pj, stime, 
+      etime, fwid, isdel, 
+      pubtime)
+    values (#{kid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{fid,jdbcType=INTEGER}, 
+      #{status,jdbcType=VARCHAR}, #{pj,jdbcType=VARCHAR}, #{stime,jdbcType=VARCHAR}, 
+      #{etime,jdbcType=VARCHAR}, #{fwid,jdbcType=INTEGER}, #{isdel,jdbcType=VARCHAR}, 
+      #{pubtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Forder" >
+    insert into forder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="kid != null" >
+        kid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="pj != null" >
+        pj,
+      </if>
+      <if test="stime != null" >
+        stime,
+      </if>
+      <if test="etime != null" >
+        etime,
+      </if>
+      <if test="fwid != null" >
+        fwid,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="pubtime != null" >
+        pubtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="kid != null" >
+        #{kid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="fid != null" >
+        #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="pj != null" >
+        #{pj,jdbcType=VARCHAR},
+      </if>
+      <if test="stime != null" >
+        #{stime,jdbcType=VARCHAR},
+      </if>
+      <if test="etime != null" >
+        #{etime,jdbcType=VARCHAR},
+      </if>
+      <if test="fwid != null" >
+        #{fwid,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null" >
+        #{pubtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Forder" >
+    update forder
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="fid != null" >
+        fid = #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="pj != null" >
+        pj = #{pj,jdbcType=VARCHAR},
+      </if>
+      <if test="stime != null" >
+        stime = #{stime,jdbcType=VARCHAR},
+      </if>
+      <if test="etime != null" >
+        etime = #{etime,jdbcType=VARCHAR},
+      </if>
+      <if test="fwid != null" >
+        fwid = #{fwid,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null" >
+        pubtime = #{pubtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where kid = #{kid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Forder" >
+    update forder
+    set uid = #{uid,jdbcType=INTEGER},
+      fid = #{fid,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      pj = #{pj,jdbcType=VARCHAR},
+      stime = #{stime,jdbcType=VARCHAR},
+      etime = #{etime,jdbcType=VARCHAR},
+      fwid = #{fwid,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=VARCHAR},
+      pubtime = #{pubtime,jdbcType=VARCHAR}
+    where kid = #{kid,jdbcType=INTEGER}
+  </update>
+</mapper>
